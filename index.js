@@ -9,6 +9,9 @@ app.get("/", (req, res) => {
 
 io.on("connection", (socket) => {
   socket.broadcast.emit("chat message", "a user has connected!");
+  console.log("a user has connected!");
+
+  // dispatch messages to other users
   socket.on("chat message", (msg) => {
     io.emit("chat message", msg);
   });

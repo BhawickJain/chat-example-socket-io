@@ -22,14 +22,14 @@
         box-sizing: border-box;
         backdrop-filter: blur(10px);
       }
-      #input {
+      #message {
         border: none;
         padding: 0 1rem;
         flex-grow: 1;
         border-radius: 2rem;
         margin: 0.25rem;
       }
-      #input:focus {
+      #message:focus {
         outline: none;
       }
       #form > button {
@@ -58,7 +58,8 @@
   <body>
     <ul id="messages"></ul>
     <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
+      <input id="nickname" autocomplete="off" />
+      <input id="message" autocomplete="off" /><button>Send</button>
     </form>
     <script src="/socket.io/socket.io.js"></script>
 
@@ -67,13 +68,15 @@
 
       var messages = document.getElementById("messages");
       var form = document.getElementById("form");
-      var input = document.getElementById("input");
+      var message = document.getElementById("message");
+      var nickname = document.getElementById("nickname");
 
       form.addEventListener("submit", function (e) {
         e.preventDefault();
-        if (input.value) {
-          socket.emit("chat message", input.value);
-          input.value = "";
+        if (nickname && message.value) {
+          msg = nickname.value + ": " + message.value;
+          socket.emit("chat message", msg);
+          message.value = "";
         }
       });
 
